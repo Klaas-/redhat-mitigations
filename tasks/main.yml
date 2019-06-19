@@ -1,0 +1,4 @@
+---
+- name: Include CVE-2019-11477
+  include_tasks: cve_2019_11477.yml
+  when: mitigate_cve_2019_11477

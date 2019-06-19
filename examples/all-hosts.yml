@@ -1,0 +1,6 @@
+---
+- name: Apply all Red Hat mitigations
+  hosts: all
+  roles:
+    - name: redhat-mitigations
+

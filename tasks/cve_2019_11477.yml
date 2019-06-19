@@ -1,0 +1,20 @@
+---
+- name: Set net.ipv4.tpc_sack = 0 if kernel is vulnerable
+  sysctl:
+    name: net.ipv4.tcp_sack 
+    value: '0'
+    sysctl_set: yes
+    state: present
+    reload: yes
+    sysctl_file: /etc/sysctl.d/99-mitigations.conf
+  when: kernel_without_arch in cve_2019_11477_vulnerable_kernels
+
+- name: Set net.ipv4.tpc_sack = 1 and remove sysctl config if kernel is fixed
+  sysctl:
+    name: net.ipv4.tcp_sack 
+    value: '1'
+    sysctl_set: yes
+    state: absent
+    reload: yes
+    sysctl_file: /etc/sysctl.d/99-mitigations.conf
+  when: kernel_without_arch not in cve_2019_11477_vulnerable_kernels
